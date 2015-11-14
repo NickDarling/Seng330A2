@@ -10,3 +10,11 @@ BuyableGrid::BuyableGrid(std::string n, int p, int r) {
 GridPrototype* BuyableGrid::Clone() {
 	return new BuyableGrid(name, price, rent);
 }
+
+int BuyableGrid::getPrice() {
+	return price;
+}
+
+int BuyableGrid::getRent() {
+	return rent;
+}

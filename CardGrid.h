@@ -9,5 +9,6 @@ public:
 	CardGrid(std::string n, int t);
 
 	GridPrototype* Clone(); 
+	int CardGrid::getType();
 };
 

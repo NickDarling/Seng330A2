@@ -9,3 +9,7 @@ CardGrid::CardGrid(std::string n, int t) {
 GridPrototype* CardGrid::Clone() {
 	return new CardGrid(name, type);
 }
+
+int CardGrid::getType() {
+	return type;
+}

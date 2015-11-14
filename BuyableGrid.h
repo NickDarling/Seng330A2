@@ -10,5 +10,7 @@ public:
 	BuyableGrid(std::string n, int p, int r);
 
 	GridPrototype* Clone(); 
-};
 
+	int getPrice();
+	int getRent();
+};

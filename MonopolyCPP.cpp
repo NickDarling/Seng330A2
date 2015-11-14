@@ -8,10 +8,15 @@ using namespace std;
 #include "BuyableGrid.h"
 #include "CardGrid.h"
 #include "monopoly.pb.h"
+#include "gtest/gtest.h"
 
 // Reads all of the buyable properties from the file properties
 // Adds one new property based on user input, then writes it back to the same file
 int _tmain(int argc, _TCHAR* argv[]) {
+	// Run tests
+	::testing::InitGoogleTest(&argc, argv);
+	cout << "Testing: " << RUN_ALL_TESTS();
+
 	GridPrototypeFactory::initialize();
 
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -64,4 +69,3 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	std::cout << "Done \n";
 	return 0;
 }
-

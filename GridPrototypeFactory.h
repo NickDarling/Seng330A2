@@ -1,6 +1,7 @@
 #pragma once
 #include "GridPrototype.h"
 
+// This factory creates GridPrototype objects by cloning existing prototypes
 class GridPrototypeFactory {
 
 private:

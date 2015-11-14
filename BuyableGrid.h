@@ -1,12 +1,11 @@
-// Base class for a buyable grid
-
 #include "GridPrototype.h"
 
+// A BuyableGrid is a derived class that represents any buyable grid
 class BuyableGrid: public GridPrototype {
 
 public:
-	int price;
-	int rent;
+	int price;	// Cost of the property
+	int rent;	// Amount paid if a player lands on this property
 
 	BuyableGrid(std::string n, int p, int r);
 

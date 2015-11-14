@@ -1,7 +1,6 @@
-// Base class for a buyable grid
-
 #include "GridPrototype.h"
 
+// A CardGrid is a derived class that represents any card grid (chance or community tile)
 class CardGrid: public GridPrototype {
 
 public:

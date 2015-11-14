@@ -10,7 +10,7 @@ GridPrototype* GridPrototypeFactory::chanceGridPrototype;
 GridPrototype* GridPrototypeFactory::comChestGridPrototype;
 
 void GridPrototypeFactory::initialize() {
-	buyableGridPrototype = new BuyableGrid("Park Place", 350);
+	buyableGridPrototype = new BuyableGrid("Park Place", 350, 0);
 	chanceGridPrototype = new CardGrid("Chance Grid", 0);
 	comChestGridPrototype = new CardGrid("Community Chest Grid", 1);
 }

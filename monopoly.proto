@@ -1,0 +1,11 @@
+package monopoly;
+
+message BuyableGrid {
+	required string name = 1;
+	required int32 price = 2;
+	required int32 rent = 3;	
+}
+
+message AllBuyableGrids {
+	repeated BuyableGrid property = 1;
+}

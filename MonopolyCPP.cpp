@@ -1,62 +1,67 @@
 #include "stdafx.h"
-#include <string>
 #include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 #include "GridPrototypeFactory.h"
 #include "BuyableGrid.h"
 #include "CardGrid.h"
+#include "monopoly.pb.h"
 
+// Reads all of the buyable properties from the file properties
+// Adds one new property based on user input, then writes it back to the same file
 int _tmain(int argc, _TCHAR* argv[]) {
 	GridPrototypeFactory::initialize();
 
-	std::string type;
-	std::cout << "Please select a type 'buyable' or 'card':";
-	std::cin >> type;
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
+	monopoly::AllBuyableGrids allBuyableGrids;
 
-	if (type.compare("buyable") == 0) {
-		std::cout << "You chose to create a buyable grid\n";
+	// Print the existing buyable grids
+	string fileName = "data.txt";
+    fstream input(fileName);
+    if (!input) {
+      cout << fileName << ": File not found.  Creating a new file.\n";
+    } else if (!allBuyableGrids.ParseFromIstream(&input)) {
+      cerr << "Failed to parse.\n";
+      return -1;
+    }
 
-		std::string name;
-		std::cout << "Please enter a name: ";
-		std::cin >> name;
+	// Adding a buyable grid
+	std::cout << "Please add one buyable grid.\n";
 
-		int price;
-		std::cout << "Please enter a price: ";
-		std::cin >> price;
+	std::string name;
+	std::cout << "Please enter a name: ";
+	std::cin >> name;
 
-		BuyableGrid* object = (BuyableGrid*)GridPrototypeFactory::getBuyableGrid();
-		object->name = name;
-		object->price = price;
+	int price;
+	std::cout << "Please enter a price: ";
+	std::cin >> price;
 
-		std::cout << "You created a buyable grid called: " + object->name << " that costs " << object->price << "\n";
-	} else if (type.compare("card") == 0) {
-		std::cout << "You chose to create a card grid\n";
+	int rent;
+	std::cout << "Please enter the rent: ";
+	std::cin >> rent;
 
-		std::string name;
-		std::cout << "Please enter a name for your grid: ";
-		std::cin >> name;
+	BuyableGrid* oneGrid = (BuyableGrid*)GridPrototypeFactory::getBuyableGrid();
+	oneGrid->name = name;
+	oneGrid->price = price;
+	oneGrid->rent = rent;
 
-		std::string cardType;
-		std::cout << "Please enter the type of cards for this grid ('chance' or 'comchest'): ";
-		std::cin >> cardType;
+	std::cout << "You created a buyable grid called: " + oneGrid->name << " that costs " << oneGrid->price << " with a rent of " << oneGrid->rent << "\n";
+	
+	monopoly::BuyableGrid* bg = allBuyableGrids.add_property();
+	bg->set_name(name);
+	bg->set_price(price);
+	bg->set_rent(rent);
 
-		if (cardType.compare("chance") == 0) {
-			CardGrid* object = (CardGrid*)GridPrototypeFactory::getChanceGrid();
-			object->name = name;
-			std::cout << "You created a chance grid called: " + object->name;
-		} else if (cardType.compare("comchest") == 0) {
-			CardGrid* object = (CardGrid*)GridPrototypeFactory::getComChestGrid();
-			object->name = name;
+	// Write the new buyable grid to disk.
+	fstream output(fileName);
+    if (!allBuyableGrids.SerializeToOstream(&output)) {
+      cerr << "Failed to write.\n";
+      return -1;
+    }
 
-			std::cout << "You created a community chest grid called: " + object->name;
-		} else {
-			std::cout << "Error: incorrect input please try again";
-		}
-	} else {
-		std::cout << "Error: incorrect input please try again";
-	}
-
-	std::cout << "\n";
+	std::cout << "Done \n";
 	return 0;
 }
 
